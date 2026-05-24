@@ -41,7 +41,7 @@ int saveFile(void){
     int curr = head;
     while(textbuffer[curr].next != NIL ){
         fprintf(fptr, "%s", textbuffer[curr].statement);
-            curr = textbuffer[curr].next;
+        curr = textbuffer[curr].next;
     }
 
     fclose(fptr);
