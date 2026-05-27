@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "include/editor.h"
+#include "../include/editor.h"
 
 int editFile(const char *filename){
     FILE *fptr = fopen(filename, "r");
@@ -13,7 +13,7 @@ int editFile(const char *filename){
     }
 
     int i = 0;
-    while(i < MAX_LEN && fgets(textbuffer[i].statement, MAX_LEN, fptr)){  //fgets() keeps newlines
+    while(i < MAX_LINES && fgets(textbuffer[i].statement, MAX_LEN, fptr)){  //fgets() keeps newlines
         textbuffer[i].prev = i - 1;
         textbuffer[i].next = i + 1;  //kendilerinden onceki ve sonraki satirlarin indexlerini tutuyorlar
         i++;
@@ -39,7 +39,7 @@ int saveFile(void){
     }
 
     int curr = head;
-    while(textbuffer[curr].next != NIL ){
+    while(curr != NIL ){
         fprintf(fptr, "%s", textbuffer[curr].statement);
         curr = textbuffer[curr].next;
     }

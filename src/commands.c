@@ -15,19 +15,19 @@ void insert(int index)
         }
     }
 
-    char newStatement[MAXCHARS];
+    char newStatement[MAX_LEN];
     memset(newStatement, 0, sizeof(newStatement));
  
     mvprintw(LINES - 1, 0, "> ");
     clrtoeol();
     echo();
     curs_set(1);
-    getnstr(newStatement, MAXCHARS - 1);
+    getnstr(newStatement, MAX_LEN - 1);
     noecho();
     curs_set(0);
  
-    int newIdx = free;
-    strncpy(textbuffer[newIdx].statement, newStatement, MAXCHARS - 1);
+    int newIdx = freeIndex;
+    strncpy(textbuffer[newIdx].statement, newStatement, MAX_LEN - 1);
     textbuffer[newIdx].statement[MAXCHARS - 1] = '\0';
   
     if (index == -1) {
@@ -51,7 +51,7 @@ void insert(int index)
         }
     }
  
-    free++;
+    freeIndex++;
  
     print();
 }
