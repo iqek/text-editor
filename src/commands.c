@@ -15,20 +15,20 @@ void insert(int index)
         }
     }
 
-    char newStatement[MAX_LEN];
+    char newStatement[MAX_LINES];
     memset(newStatement, 0, sizeof(newStatement));
  
     mvprintw(LINES - 1, 0, "> ");
     clrtoeol();
     echo();
     curs_set(1);
-    getnstr(newStatement, MAX_LEN - 1);
+    getnstr(newStatement, MAX_LINES - 1);
     noecho();
     curs_set(0);
  
     int newIdx = freeIndex;
-    strncpy(textbuffer[newIdx].statement, newStatement, MAX_LEN - 1);
-    textbuffer[newIdx].statement[MAXCHARS - 1] = '\0';
+    strncpy(textbuffer[newIdx].statement, newStatement, MAX_LINES - 1);
+    textbuffer[newIdx].statement[MAX_LINES - 1] = '\0';
   
     if (index == -1) {
         textbuffer[newIdx].prev = -1;
