@@ -4,10 +4,10 @@
 
 void insert(int index)
 {
-    if (free >= MAXLINES) {
+    if (freeIndex >= MAX_LINES) {
         garbageCollection();
  
-        if (free >= MAXLINES) {
+        if (freeIndex >= MAX_LINES) {
             mvprintw(LINES - 1, 0, "ERROR: text buffer is full, cannot insert.");
             clrtoeol();
             refresh();
@@ -55,3 +55,12 @@ void insert(int index)
  
     print();
 }
+
+
+int replaceChar(int lineIndex, int charIndex, char newChar){
+    if(lineIndex >= 0 && charIndex >= 0 && lineIndex < freeIndex && charIndex < strlen(textbuffer[lineIndex].statement)){
+        textbuffer[lineIndex].statement[charIndex] = newChar;
+        return 0;
+    } 
+    return -1;
+} 
