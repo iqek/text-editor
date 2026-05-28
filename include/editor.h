@@ -125,6 +125,8 @@ int cursorLine(void);
 int cursorChar(void);
 //PDF'teki cursorChar() fonksiyonudur.Cursor'ın seçili satırdaki karakter pozisyonunu döndürür.
 
+int handleInput(void);
+
 
 //---------------------------------------------------------------------------------------------------------------------------
 
