@@ -56,7 +56,7 @@ void printEditor(void)
     int idx = head;
     int selIdx = getBufferIndexByScreenLine(selectedScreenLine);
 
-    while (idx != NIL && row < MAX_SCREEN_COUNT){
+    while (idx != NIL && row < MAX_SCREEN_LINES){
         if (idx == selIdx)
             attron(A_REVERSE);
 
