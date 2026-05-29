@@ -2,58 +2,43 @@
 #include <string.h>
 #include <ncurses.h>
 
-void insert(int index)
+int insertLineAfter(int index, const char *line)
 {
-    if (freeIndex >= MAX_LINES) {
+    if(freeIndex >= MAX_LINES) {
         garbageCollection();
- 
-        if (freeIndex >= MAX_LINES) {
-            mvprintw(LINES - 1, 0, "ERROR: text buffer is full, cannot insert.");
-            clrtoeol();
-            refresh();
-            return;
+        if(freeIndex >= MAX_LINES) {
+            return -1;
         }
     }
 
-    char newStatement[MAX_LINES];
-    memset(newStatement, 0, sizeof(newStatement));
- 
-    mvprintw(LINES - 1, 0, "> ");
-    clrtoeol();
-    echo();
-    curs_set(1);
-    getnstr(newStatement, MAX_LINES - 1);
-    noecho();
-    curs_set(0);
- 
     int newIdx = freeIndex;
-    strncpy(textbuffer[newIdx].statement, newStatement, MAX_LINES - 1);
-    textbuffer[newIdx].statement[MAX_LINES - 1] = '\0';
-  
-    if (index == -1) {
-        textbuffer[newIdx].prev = -1;
-        textbuffer[newIdx].next = -1;
-        head = newIdx;
-        tail = newIdx;
- 
-    } else {
+    strncpy(textbuffer[newIdx].statement, line, MAX_LEN - 1);
+    textbuffer[newIdx].statement[MAX_LEN - 1] = '\0';
+
+    if(index == -1) {
+        textbuffer[newIdx].prev = -1; textbuffer[newIdx].next = -1; head = newIdx; tail = newIdx;
+    }
+    else{
         int nextIdx = textbuffer[index].next;
- 
+
         textbuffer[newIdx].prev = index;
         textbuffer[newIdx].next = nextIdx;
- 
+
         textbuffer[index].next = newIdx;
- 
-        if (nextIdx != -1) {
+
+        if(nextIdx != -1) {
             textbuffer[nextIdx].prev = newIdx;
-        } else {
+        }
+        else{
             tail = newIdx;
         }
     }
- 
+
     freeIndex++;
- 
-    print();
+    operationCount++;
+    checkAutomaticGC();
+
+    return 0;
 }
 
 
@@ -95,6 +80,7 @@ int deleteLine(int index){
     textbuffer[index].prev = NIL;
 
     operationCount++;
+    checkAutomaticGC();
 
     return 0;
 }
