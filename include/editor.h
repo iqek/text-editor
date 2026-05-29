@@ -116,7 +116,7 @@ void initUI(void);
 void closeUI(void);
 //Açıklama: ncurses ekranını kapatır. Örneğin endwin().
 
-void printEditor(void);
+void print(void);
 // PDF'teki print() fonksiyonunun karşılığıdır.head'den başlayıp next linklerini takip ederek text'i ekranda gösterir.
 
 int cursorLine(void);
