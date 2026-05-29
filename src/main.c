@@ -34,13 +34,30 @@ int main(void) {
         }
 
         else if (command == 'D' || command == 'd') {
-            printf("Delete command will be connected with UI later.\n");
+		int screenLine;
+		printf("Enter line number to delete: ");
+		if(scanf("%d", &screenLine) != 1){
+			printf("Error: Invalid line number.\n");
+			while(getchar() != '\n');
+		}else{
+			int index = getBufferIndexByScreenLine(screenLine);
+
+			if (index == NIL){
+				printf("Error: No such line.\n");
+			}else{
+				if(deleteLine(index) == 0){
+					printf("Deleted screen line %d buffer index %d.\n",screenLine, index);
+					debugPrintBuffer();
+				}else{
+					printf("Error: Delete failed.\n");
+				}
+			}
+		}
         }
 
         else if (command == 'R' || command == 'r') {
             printf("Replace command will be connected with UI later.\n");
         }
-
         else if (command == 'S' || command == 's') {
             if (saveFile() == 0) {
                 printf("File saved.\n");
