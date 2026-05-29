@@ -8,7 +8,7 @@ TARGET = editor
 all: $(TARGET)
 
 $(TARGET): $(SRC) include/editor.h
-  $(CC) $(CFLAGS) $(SRC) -o $(TARGET) $(LIBS)
+	$(CC) $(CFLAGS) $(SRC) -o $(TARGET) $(LIBS)
 
 clean:
 	rm -f $(TARGET)
