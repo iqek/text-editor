@@ -48,7 +48,7 @@ void closeUI(void)
     endwin();
 }
 
-void printEditor(void)
+void print(void)
 {
     clear();
 
