@@ -64,3 +64,45 @@ int replaceChar(int lineIndex, int charIndex, char newChar){
     } 
     return -1;
 } 
+
+
+int deleteLine(int index){
+    int prevIndex;
+    int nextIndex;
+
+    if(index == NIL){
+        return -1;
+    }
+
+    prevIndex = textbuffer[index].prev;
+    nextIndex = textbuffer[index].next;
+
+    if(prevIndex != NIL){
+        textbuffer[prevIndex].next = nextIndex;
+    }
+    else{
+        head = nextIndex;
+    }
+
+    if(nextIndex != NIL){
+        textbuffer[nextIndex].prev = prevIndex;
+    }
+    else{
+        tail = prevIndex;
+    }
+
+    textbuffer[index].next = NIL;
+    textbuffer[index].prev = NIL;
+
+    operationCount++;
+
+    return 0;
+}
+
+
+
+
+
+
+
+
