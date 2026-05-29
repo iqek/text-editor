@@ -48,14 +48,13 @@ int garbageCollection(void){
     return reclaimed;
 }
 
-void autoGC(int *opCount)
+void checkAutomaticGC(void);
 {
     int shouldCollect = 0;
 
     if (freeIndex >= MAX_LINES) //decide if gc is needed
         shouldCollect = 1;
 
-    (*opCount)++; //operation counter
     if (*opCount >= 10)
         shouldCollect = 1;
 
