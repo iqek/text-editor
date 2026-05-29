@@ -26,7 +26,7 @@ int main(void) {
         }
 
         else if (command == 'P' || command == 'p') {
-            printEditor();
+            print();
         }
 
         else if (command == 'I' || command == 'i') {
