@@ -43,7 +43,7 @@ int insertLineAfter(int index, const char *line)
 
 
 int replaceChar(int lineIndex, int charIndex, char newChar){
-    if(lineIndex >= 0 && charIndex >= 0 && lineIndex < freeIndex && charIndex < strlen(textbuffer[lineIndex].statement)){
+    if(lineIndex >= 0 && charIndex >= 0 && lineIndex < freeIndex && charIndex < (int)strlen(textbuffer[lineIndex].statement)){
         textbuffer[lineIndex].statement[charIndex] = newChar;
         return 0;
     } 
