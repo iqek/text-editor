@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "../include/editor.h"
+#include <ncurses.h>
 
 int main(void) {
     char command;
@@ -25,9 +26,85 @@ int main(void) {
             }
         }
 
-        else if (command == 'P' || command == 'p') {
-            print();
-        }
+        /*else if (command == 'P' || command == 'p') {
+            //print(void);
+            debugPrintBuffer();
+        }*/
+
+	else if (command == 'P' || command == 'p') {
+    		int ch;
+    		int runningUI = 1;
+
+    		initUI();
+
+    		while (runningUI) {
+        		print();
+        		ch = handleInput();
+
+        		if (ch == ERR) {
+            			continue;
+        		}
+
+        		if (ch == 'Q' || ch == 'q') {
+            			runningUI = 0;
+        		}
+
+        		else if (ch == 'D' || ch == 'd') {
+            			int index = cursorLine();
+
+            			if (deleteLine(index) == 0) {
+                			print();
+            			}
+        		}
+
+        		else if (ch == 'G' || ch == 'g') {
+            			garbageCollection();
+            			print();
+        		}
+
+        		else if (ch == 'S' || ch == 's') {
+            			saveFile();
+            			print();
+        		}
+
+        		else if (ch == 'I' || ch == 'i') {
+            			char newLine[MAX_LEN];
+
+            			echo();
+            			curs_set(1);
+            			mvprintw(LINES - 1, 0, "Insert new line: ");
+            			clrtoeol();
+            			getnstr(newLine, MAX_LEN - 1);
+            			noecho();
+
+            			int index = cursorLine();
+
+            			if (insertLineAfter(index, newLine) == 0) {
+                			print();
+            			}
+        		}
+
+        		else if (ch == 'R' || ch == 'r') {
+            			int lineIndex = cursorLine();
+            			int charIndex = cursorChar();
+
+            			mvprintw(LINES - 1, 0, "New char: ");
+            			clrtoeol();
+            			refresh();
+
+            			int newChar = getch();
+
+            			if (newChar != ERR) {
+                			replaceChar(lineIndex, charIndex, (char)newChar);
+                			print();
+            			}
+        		}
+    		}
+
+    		closeUI();
+
+    		printf("Returned from editor screen.\n");
+	}
 
         else if (command == 'I' || command == 'i') {
             printf("Insert command will be connected with UI later.\n");

@@ -12,12 +12,20 @@ int garbageCollection(void){
         cur = textbuffer[cur].next;
     }
 
-    if (count == 0) { //if the list is empty
+    if (count == 0) {
+    	head = NIL;
+    	tail = NIL;
+    	freeIndex = 0;
+    	operationCount = 0;
+    	return 0;
+    }
+    /*if (count == 0) { //if the list is empty
         head = -1;
         tail = -1;
         freeIndex = 0;
         return -1;
-    }
+    }*/
+
 
     struct node tmp[MAX_LINES]; //copy valid nodes into a temporary array
     for (int i = 0; i < count; i++) {
@@ -41,11 +49,18 @@ int garbageCollection(void){
         reclaimed++;
     }
 
-    head = 0; //update global pointers
+    /*head = 0; //update global pointers
     tail = count - 1;
     freeIndex = count;
 
+    return reclaimed;*/
+
+    head = 0;
+    tail = count - 1;
+    freeIndex = count;
+    operationCount = 0;
     return reclaimed;
+
 }
 
 void checkAutomaticGC(void)

@@ -6,7 +6,7 @@
 
 //UI
 static int selectedScreenLine = 0;
-static int selectedChar       = 0;  
+static int selectedChar       = 0;
 
 
 static int lenOfCurrentLine(void)
