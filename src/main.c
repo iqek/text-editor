@@ -10,7 +10,7 @@ int main(void) {
     initBuffer();
 
     printf("CSE232 Text Editor\n");
-    printf("Commands: E filename, P, I, D, R, S, G, Q\n");
+    printf("Commands: E filename, P, S, G, Q\n");
 
     while (1) {
         printf("\n> ");
@@ -18,7 +18,6 @@ int main(void) {
 
         if (command == 'E' || command == 'e') {
             scanf("%255s", filename);
-
             if (edit(filename) == 0) {
                 printf("File opened: %s\n", filename);
             } else {
@@ -26,91 +25,54 @@ int main(void) {
             }
         }
 
-	else if (command == 'P' || command == 'p') {
-    		int ch;
-    		int runningUI = 1;
+        else if (command == 'P' || command == 'p') {
+            int ch;
+            int runningUI = 1;
 
-    		initUI();
+            initUI();
 
-    		while (runningUI) {
-        		print();
-        		ch = handleInput();
+            while (runningUI) {
+                print();
+                ch = handleInput();
 
-        		if (ch == ERR) {
-            			continue;
-        		}
+                if (ch == ERR) {
+                    continue;
+                }
 
-        		if (ch == 'Q' || ch == 'q') {
-            			runningUI = 0;
-        		}
-
-        		else if (ch == 'D' || ch == 'd') {
-            			int index = cursorLine();
-
-            			if (delete(index) == 0) {
-                			print();
-            			}
-        		}
-
-        		else if (ch == 'G' || ch == 'g') {
-            			garbageCollection();
-            			print();
-        		}
-
-        		else if (ch == 'S' || ch == 's') {
-            			save();
-            			print();
-        		}
-
-        		else if (ch == 'I' || ch == 'i') {
-            			int index = cursorLine();
-
-            			if (insert(index) == 0) {
+                if (ch == 'Q' || ch == 'q') {
+                    runningUI = 0;
+                }
+                else if (ch == 'D' || ch == 'd') {
+                    int index = cursorLine();
+                    if (delete(index) == 0) {
                         print();
                     }
-        		}
-
-        		else if (ch == 'R' || ch == 'r') {
-            			if (replace(cursorChar()) == 0) {
+                }
+                else if (ch == 'G' || ch == 'g') {
+                    garbageCollection();
+                    print();
+                }
+                else if (ch == 'S' || ch == 's') {
+                    save();
+                    print();
+                }
+                else if (ch == 'I' || ch == 'i') {
+                    int index = cursorLine();
+                    if (insert(index) == 0) {
                         print();
                     }
-        		}
-    		}
+                }
+                else if (ch == 'R' || ch == 'r') {
+                    if (replace(cursorChar()) == 0) {
+                        print();
+                    }
+                }
+            }
 
-    		closeUI();
-
-    		printf("Returned from editor screen.\n");
-	}
-
-        else if (command == 'I' || command == 'i') {
-            printf("Insert command will be connected with UI later.\n");
+            closeUI();
+            printf("Returned from editor screen.\n");
         }
 
-        else if (command == 'D' || command == 'd') {
-		int screenLine;
-		printf("Enter line number to delete: ");
-		if(scanf("%d", &screenLine) != 1){
-			printf("Error: Invalid line number.\n");
-			while(getchar() != '\n');
-		}else{
-			int index = getBufferIndexByScreenLine(screenLine);
-
-			if (index == -1){
-				printf("Error: No such line.\n");
-			}else{
-				if(delete(index) == 0){
-					printf("Deleted screen line %d buffer index %d.\n",screenLine, index);
-					debugPrintBuffer();
-				}else{
-					printf("Error: Delete failed.\n");
-				}
-			}
-		}
-        }
-
-        else if (command == 'R' || command == 'r') {
-            printf("Replace command will be connected with UI later.\n");
-        }
         else if (command == 'S' || command == 's') {
             if (save() == 0) {
                 printf("File saved.\n");
