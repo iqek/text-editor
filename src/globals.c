@@ -2,8 +2,8 @@
 
 Node textbuffer[MAX_LINES];
 
-int head = NIL;
-int tail = NIL;
+int head = -1;
+int tail = -1;
 int freeIndex = 0;
 
 char currentFilename[256] = "";
