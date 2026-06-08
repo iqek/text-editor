@@ -19,7 +19,7 @@ int main(void) {
         if (command == 'E' || command == 'e') {
             scanf("%255s", filename);
 
-            if (editFile(filename) == 0) {
+            if (edit(filename) == 0) {
                 printf("File opened: %s\n", filename);
             } else {
                 printf("Error: Could not open file.\n");
@@ -47,7 +47,7 @@ int main(void) {
         		else if (ch == 'D' || ch == 'd') {
             			int index = cursorLine();
 
-            			if (deleteLine(index) == 0) {
+            			if (delete(index) == 0) {
                 			print();
             			}
         		}
@@ -58,41 +58,22 @@ int main(void) {
         		}
 
         		else if (ch == 'S' || ch == 's') {
-            			saveFile();
+            			save();
             			print();
         		}
 
         		else if (ch == 'I' || ch == 'i') {
-            			char newLine[MAX_LEN];
-
-            			echo();
-            			curs_set(1);
-            			mvprintw(LINES - 1, 0, "Insert new line: ");
-            			clrtoeol();
-            			getnstr(newLine, MAX_LEN - 1);
-            			noecho();
-
             			int index = cursorLine();
 
-            			if (insertLineAfter(index, newLine) == 0) {
-                			print();
-            			}
+            			if (insert(index) == 0) {
+                        print();
+                    }
         		}
 
         		else if (ch == 'R' || ch == 'r') {
-            			int lineIndex = cursorLine();
-            			int charIndex = cursorChar();
-
-            			mvprintw(LINES - 1, 0, "New char: ");
-            			clrtoeol();
-            			refresh();
-
-            			int newChar = getch();
-
-            			if (newChar != ERR) {
-                			replaceChar(lineIndex, charIndex, (char)newChar);
-                			print();
-            			}
+            			if (replace(cursorChar()) == 0) {
+                        print();
+                    }
         		}
     		}
 
@@ -117,7 +98,7 @@ int main(void) {
 			if (index == -1){
 				printf("Error: No such line.\n");
 			}else{
-				if(deleteLine(index) == 0){
+				if(delete(index) == 0){
 					printf("Deleted screen line %d buffer index %d.\n",screenLine, index);
 					debugPrintBuffer();
 				}else{
@@ -131,7 +112,7 @@ int main(void) {
             printf("Replace command will be connected with UI later.\n");
         }
         else if (command == 'S' || command == 's') {
-            if (saveFile() == 0) {
+            if (save() == 0) {
                 printf("File saved.\n");
             } else {
                 printf("Error: Could not save file.\n");

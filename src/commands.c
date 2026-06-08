@@ -2,7 +2,7 @@
 #include <string.h>
 #include <ncurses.h>
 
-int insertLineAfter(int index, const char *line)
+int insert(int index)
 {
     if(freeIndex >= MAX_LINES) {
         garbageCollection();
@@ -10,6 +10,14 @@ int insertLineAfter(int index, const char *line)
             return -1;
         }
     }
+
+    char line[MAX_LEN];
+    echo();
+    curs_set(1);
+    mvprintw(LINES - 1, 0, "Insert new line: ");
+    clrtoeol();
+    getnstr(line, MAX_LEN - 1);
+    noecho();
 
     int newIdx = freeIndex;
     strncpy(textbuffer[newIdx].statement, line, MAX_LEN - 1);
@@ -42,8 +50,17 @@ int insertLineAfter(int index, const char *line)
 }
 
 
-int replaceChar(int lineIndex, int charIndex, char newChar){
-    if(lineIndex >= 0 && charIndex >= 0 && lineIndex < freeIndex && charIndex < (int)strlen(textbuffer[lineIndex].statement)){
+int replace(int index){
+
+    int lineIndex = cursorLine();
+    int charIndex = index;
+
+    mvprintw(LINES - 1, 0, "New char: ");
+    clrtoeol();
+    refresh();
+    int newChar = getch();
+
+    if(lineIndex >= 0 && charIndex >= 0 && lineIndex < freeIndex && charIndex < (int)strlen(textbuffer[lineIndex].statement) && newChar != ERR){
         textbuffer[lineIndex].statement[charIndex] = newChar;
         return 0;
     } 
@@ -51,7 +68,7 @@ int replaceChar(int lineIndex, int charIndex, char newChar){
 } 
 
 
-int deleteLine(int index){
+int delete(int index){
     int prevIndex;
     int nextIndex;
 

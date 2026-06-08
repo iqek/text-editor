@@ -4,7 +4,7 @@
 
 #include "../include/editor.h"
 
-int editFile(const char *filename){
+int edit(char *filename){
     FILE *fptr = fopen(filename, "r");
 
     if(fptr == NULL){
@@ -20,7 +20,7 @@ int editFile(const char *filename){
         textbuffer[i].statement[strcspn(textbuffer[i].statement, "\n")] = '\0';
 
         textbuffer[i].prev = (i == 0) ? -1 : i - 1;
-        textbuffer[i].  ext = i + 1;
+        textbuffer[i].next = i + 1;
 
         i++;
     }
@@ -45,7 +45,7 @@ int editFile(const char *filename){
     return 0;
 }
 
-int saveFile(void){
+int save(void){
     FILE *fptr = fopen(currentFilename, "w");
 
     if(fptr == NULL){

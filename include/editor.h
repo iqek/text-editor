@@ -26,8 +26,8 @@ int getBufferIndexByScreenLine(int screenLine);
 int validLineCount(void);
 void debugPrintBuffer(void);
 
-int editFile(const char *filename);
-int saveFile(void);
+int edit(char *filename);
+int save(void);
 
 void initUI(void);
 void closeUI(void);
@@ -36,9 +36,9 @@ int cursorLine(void);
 int cursorChar(void);
 int handleInput(void);
 
-int insertLineAfter(int index, const char *line);
-int deleteLine(int index);
-int replaceChar(int lineIndex, int charIndex, char newChar);
+int insert(int index);
+int delete(int index);
+int replace(int index);
 
 int garbageCollection(void);
 void checkAutomaticGC(void);
