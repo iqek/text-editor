@@ -30,7 +30,7 @@ make
 - `G` — garbage collection
 - `Q` — return to outer prompt
 
-## Notes
+## notes
 
 - Max 100 lines, 40 characters per line
 - Garbage collection runs automatically after every 10 insertions/deletions or when the buffer is full
