@@ -55,29 +55,29 @@ int deleteLine(int index){
     int prevIndex;
     int nextIndex;
 
-    if(index == NIL){
+    if(index == -1){
         return -1;
     }
 
     prevIndex = textbuffer[index].prev;
     nextIndex = textbuffer[index].next;
 
-    if(prevIndex != NIL){
+    if(prevIndex != -1){
         textbuffer[prevIndex].next = nextIndex;
     }
     else{
         head = nextIndex;
     }
 
-    if(nextIndex != NIL){
+    if(nextIndex != -1){
         textbuffer[nextIndex].prev = prevIndex;
     }
     else{
         tail = prevIndex;
     }
 
-    textbuffer[index].next = NIL;
-    textbuffer[index].prev = NIL;
+    textbuffer[index].next = -1;
+    textbuffer[index].prev = -1;
 
     operationCount++;
     checkAutomaticGC();
