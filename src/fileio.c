@@ -12,19 +12,34 @@ int editFile(const char *filename){
         return -1;
     }
 
+    initBuffer();
+
     int i = 0;
-    while(i < MAX_LINES && fgets(textbuffer[i].statement, MAX_LEN, fptr)){  //fgets() keeps newlines
-        textbuffer[i].prev = i - 1;
-        textbuffer[i].next = i + 1;  //kendilerinden onceki ve sonraki satirlarin indexlerini tutuyorlar
+
+    while(i < MAX_LINES && fgets(textbuffer[i].statement, MAX_LEN, fptr)){
+        textbuffer[i].statement[strcspn(textbuffer[i].statement, "\n")] = '\0';
+
+        textbuffer[i].prev = (i == 0) ? -1 : i - 1;
+        textbuffer[i].  ext = i + 1;
+
         i++;
     }
-    textbuffer[i-1].next = NIL;
 
-    head = 0;
-    tail = i - 1;
-    freeIndex = i;
+    if(i == 0){
+        head = -1;
+        tail = -1;
+        freeIndex = 0;
+    }
+    else{
+        head = 0;
+        tail = i - 1;
+        textbuffer[tail].next = -1;
+        freeIndex = i;
+    }
 
     strncpy(currentFilename, filename, 255);
+    currentFilename[255] = '\0';
+
     fclose(fptr);
 
     return 0;
@@ -39,8 +54,8 @@ int saveFile(void){
     }
 
     int curr = head;
-    while(curr != NIL ){
-        fprintf(fptr, "%s", textbuffer[curr].statement);
+    while(curr != -1 ){
+        fprintf(fptr, /*"%s"*/ "%s\n", textbuffer[curr].statement);
         curr = textbuffer[curr].next;
     }
 

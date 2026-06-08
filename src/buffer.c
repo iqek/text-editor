@@ -4,11 +4,11 @@
 void initBuffer(void){
     for(int i=0; i<MAX_LINES; i++){
         textbuffer[i].statement[0] = '\0';
-        textbuffer[i].next = NIL;
-        textbuffer[i].prev = NIL;
+        textbuffer[i].next = -1;
+        textbuffer[i].prev = -1;
     }
-    head = NIL;
-    tail = NIL;
+    head = -1;
+    tail = -1;
     freeIndex = 0;
     operationCount = 0;
 }
@@ -17,7 +17,7 @@ int validLineCount(void){
     int count = 0;
     int current = head;
 
-    while(current != NIL){
+    while(current != -1){
         count++;
         current = textbuffer[current].next;
     }
@@ -29,10 +29,10 @@ int getBufferIndexByScreenLine(int screenLine){
     int row = 0;
 
     if(screenLine < 0){
-        return NIL;
+        return -1;
     }
 
-    while(current != NIL && row < screenLine){
+    while(current != -1 && row < screenLine){
         current = textbuffer[current].next;
         row++;
     }
@@ -46,7 +46,7 @@ void debugPrintBuffer(void){
     printf("Tail = %d\n", tail);
     printf("Free Index = %d\n\n", freeIndex);
 
-    while(current != NIL)
+    while(current != -1)
     {
         printf("Current Index: %d\n", current);
         printf("Prev: %d\n", textbuffer[current].prev);

@@ -1,18 +1,15 @@
-// -lncurses libi ekleme
-
 #include <ncurses.h>
 #include <string.h>
 #include "editor.h"
 
-//UI
 static int selectedScreenLine = 0;
-static int selectedChar       = 0;  
+static int selectedChar       = 0;
 
 
 static int lenOfCurrentLine(void)
 {
     int idx = getBufferIndexByScreenLine(selectedScreenLine);
-    if (idx == NIL)
+    if (idx == -1)
         return 0;
     return (int)strlen(textbuffer[idx].statement);
 }
@@ -56,7 +53,7 @@ void print(void)
     int idx = head;
     int selIdx = getBufferIndexByScreenLine(selectedScreenLine);
 
-    while (idx != NIL && row < MAX_SCREEN_LINES){
+    while (idx != -1 && row < MAX_SCREEN_LINES){
         if (idx == selIdx)
             attron(A_REVERSE);
 
@@ -82,7 +79,6 @@ void print(void)
     refresh();
 }
 
-//keremin getchle
 int handleInput(void)
 {
     int ch = getch();
